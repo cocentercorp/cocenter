@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Co Center</title>
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link crossorigin="crossorigin" href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;0,800;1,400&amp;display=swap" rel="stylesheet">
+  <style type="text/css">
+    * { box-sizing: border-box !important; margin: 0; padding: 0; font-family: 'JetBrains Mono', monospace !important; }
+    html, body { width: 100% !important; min-height: 100vh !important; background-color: #05060a !important; background-image: url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh9DocQHrQw9p05Lbkght7m-rpO8O2HS6s3VG28Nc7FW6LPePf_AYJ3E104I15aD8OUsQRINz7QGbgv7EeJXKZKXdecQ-RAHvowdbS5vPqDrfZ63ZC3w-FOPKWPcVBKY5IFdenDmRixqc-Jy8BvVpAp6ReI7Io5UdxjNnlzY_TZLuTW6xaepq9RkRMA92kV/s1600/11.gif') !important; background-repeat: no-repeat !important; background-position: center center !important; background-size: cover !important; background-attachment: fixed !important; color: #fff !important; overflow-x: hidden !important; }
+    a { color: inherit; }
+    img { max-width: 100%; }
+    .cc-overlay { position: fixed; inset: 0; width: 100vw; height: 100vh; background: rgba(3,4,8,.82); z-index: 0; pointer-events: none; }
+    .cc-wrapper { position: relative; z-index: 1; width: 100%; max-width: 800px; margin: 0 auto; padding: 20px 16px 50px; }
+    .cc-nav { position: relative; display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 12px 16px; margin-bottom: 24px; z-index: 999; }
+    .cc-brand-group { display: flex; align-items: center; gap: 12px; min-width: 0; }
+    .cc-brand-logo { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent; border-radius: 10px; flex-shrink: 0; }
+    .cc-brand-img { display: block; width: 34px; height: 34px; object-fit: cover; border-radius: 10px; border: 1px solid rgba(255,255,255,.20); background: transparent !important; transform: rotate(0deg); transition: transform .5s cubic-bezier(.4,0,.2,1); }
+    .cc-brand-img.spin-half { transform: rotate(180deg); }
+    .cc-brand-img.spin-full { transform: rotate(360deg); }
+    .cc-brand-text { color: #fff; font-size: 18px; font-weight: 800; text-decoration: none; cursor: pointer; user-select: none; -webkit-tap-highlight-color: transparent; white-space: nowrap; }
+    .cc-menu-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; width: 42px; height: 42px; padding: 10px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); border-radius: 12px; cursor: pointer; transition: transform .2s ease; -webkit-tap-highlight-color: transparent; }
+    .cc-menu-btn:active { transform: scale(.95); }
+    .cc-menu-btn span { display: block; width: 18px; height: 2px; background: #fff; border-radius: 2px; }
+    .cc-menu { position: absolute; top: calc(100% + 10px); right: 0; z-index: 1000; display: none; width: 220px; padding: 10px; background: rgba(12,14,20,.96); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,.15); border-radius: 16px; box-shadow: 0 15px 35px rgba(0,0,0,.60); pointer-events: auto; }
+    .cc-menu.active { display: block; animation: ccFadeIn .2s ease; }
+    @keyframes ccFadeIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+    .cc-menu a { display: block; padding: 11px 14px; color: #f5f7fa; font-size: 13px; font-weight: 700; text-decoration: none; border-radius: 10px; transition: background .2s ease, color .2s ease; }
+    .cc-menu a:hover { color: #29e0c9; background: rgba(255,255,255,.10); }
+    .cc-hero { padding: 30px 10px 20px; }
+    .cc-title { margin-bottom: 16px; color: #fff; font-size: clamp(36px,8vw,60px); font-weight: 800; line-height: 1.1; letter-spacing: -1px; }
+    .cc-tagline { max-width: 680px; margin-bottom: 32px; color: #a9b2c3; font-size: 15px; line-height: 1.6; }
+    .cc-btn-row { display: flex; flex-wrap: wrap; gap: 14px; }
+    .cc-btn { position: relative; display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 14px 28px; overflow: hidden; isolation: isolate; color: #f5f7fa; background: #121420; border: 0; border-radius: 999px; font-size: 14px; font-weight: 700; text-decoration: none; cursor: pointer; -webkit-tap-highlight-color: transparent; transition: transform .15s ease; }
+    .cc-btn:active { transform: scale(.96); }
+    .cc-btn-fill { position: absolute; inset: 2px; z-index: -1; background: #121420; border-radius: 999px; }
+    .cc-btn-label { position: relative; z-index: 2; }
+    :root { --rgb1: #ff2d6a; --rgb2: #ffd23f; --rgb3: #29e0c9; --rgb4: #7c5cff; --rgb5: #ff2d6a; }
+    .cc-btn::before { content: ''; position: absolute; inset: 0; z-index: -2; padding: 2px; background: conic-gradient( from var(--angle,0deg), var(--rgb1), var(--rgb2), var(--rgb3), var(--rgb4), var(--rgb5) ); border-radius: 999px; -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; opacity: .75; animation: ccAngle 4s linear infinite; }
+    @property --angle { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+    @keyframes ccAngle { to { --angle: 360deg; } }
+    .bubble-box { width: 100%; margin-bottom: 20px; padding: 20px 22px; background: linear-gradient(#0d0f16,#0d0f16) padding-box, linear-gradient( 90deg, #ff2d6a, #ffd23f, #29e0c9, #7c5cff, #ff2d6a ) border-box !important; background-size: 200% 200% !important; border: 2px solid transparent !important; border-radius: 18px; box-shadow: 0 10px 30px rgba(0,0,0,.50); animation: rgbStroke 4s linear infinite; }
+    @keyframes rgbStroke { 0% { background-position: 0% 50%; } 100% { background-position: 200% 50%; } }
+    h1.post-title, h2.post-title, h3.post-title, .post-title a { display: block !important; margin: 0 !important; color: #fff !important; font-size: 20px !important; font-weight: 800 !important; line-height: 1.4 !important; text-decoration: none !important; }
+    .post-body { color: #e2e8f0 !important; font-size: 14px !important; line-height: 1.65 !important; }
+    .post-body p { margin-bottom: 12px !important; }
+    .post-body strong { display: inline !important; color: #fff !important; font-weight: 700 !important; }
+    .post-body img { display: block !important; max-width: 100% !important; height: auto !important; margin: 14px 0 !important; border-radius: 12px !important; box-shadow: 0 4px 15px rgba(0,0,0,.30); }
+    .post-body a { color: #29e0c9 !important; }
+    @media screen and (max-width: 600px) {
+      .cc-wrapper { padding: 12px 12px 40px; }
+      .cc-nav { margin-bottom: 16px; padding: 10px 12px; }
+      .cc-brand-text { font-size: 16px; }
+      .cc-menu { right: 0; width: min(220px, calc(100vw - 24px)); }
+      .cc-hero { padding: 24px 6px 18px; }
+      .cc-title { font-size: clamp(34px,12vw,52px); }
+      .cc-tagline { font-size: 13px; }
+      .cc-btn-row { gap: 10px; }
+      .cc-btn { min-height: 44px; padding: 12px 20px; font-size: 12px; }
+      .bubble-box { padding: 17px 16px; border-radius: 15px; }
+      h1.post-title, h2.post-title, h3.post-title, .post-title a { font-size: 18px !important; }
+      .post-body { font-size: 13px !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="cc-overlay"></div>
+  <div class="cc-wrapper">
+
+    <div class="cc-nav">
+      <div class="cc-brand-group">
+        <span class="cc-brand-logo" id="btn-logo">
+          <img class="cc-brand-img" id="logo-img" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjgKAkQ6fTJOBPoOVz21klx2Vw6CXegaFe7QnvWoaDZTt1raufO5Ikvqu0JrP93QUf_iAcqVp8IkcTZjTx_e1mMqJENEYIpEjv-br9ApdDAeMiPcm8xoO-dFAmPJa-9y22yJdNme0Eb-EFxm-dS0Pd2UwUNu2cfB5pxS7KA7RP1JPKB-79xmqs5Vl9pSYHn/s1600/IMG_20260808_230713.png" alt="Logo">
+        </span>
+        <span class="cc-brand-text" id="btn-text">CO CENTER</span>
+      </div>
+      <div class="cc-menu-btn" id="btn-menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <div class="cc-menu" id="cc-dropdown">
+        <a href="index.html">🏠 Home</a>
+        <a href="menu.html">📋 Menu</a>
+        <a href="https://lynk.id/cocenter" rel="noopener" target="_blank">🔗 Lynk.id</a>
+        <a href="https://whatsapp.com/channel/0029Vb8J3S2Id7nQxpJJAK12" rel="noopener" target="_blank">🧾 Bukti Transaksi</a>
+        <a href="#about">👤 About Me</a>
+      </div>
+    </div>
+
+    <div class="cc-hero">
+      <h1 class="cc-title">Co Center</h1>
+      <p class="cc-tagline">
+        Platform membership eksklusif. Dapatkan akses ke layanan premium dan nikmati pengalaman tanpa batas di dalam ekosistem Co Center.
+      </p>
+      <div class="cc-btn-row">
+        <a class="cc-btn" href="menu.html">
+          <span class="cc-btn-fill"></span>
+          <span class="cc-btn-label">Menu</span>
+        </a>
+        <a class="cc-btn" href="https://lynk.id/cocenter" rel="noopener" target="_blank">
+          <span class="cc-btn-fill"></span>
+          <span class="cc-btn-label">Lynk.id</span>
+        </a>
+        <a class="cc-btn" href="https://whatsapp.com/channel/0029Vb8J3S2Id7nQxpJJAK12" rel="noopener" target="_blank">
+          <span class="cc-btn-fill"></span>
+          <span class="cc-btn-label">Bukti Transaksi</span>
+        </a>
+        <a class="cc-btn" href="#about">
+          <span class="cc-btn-fill"></span>
+          <span class="cc-btn-label">About Me</span>
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+      var btnText = document.getElementById('btn-text');
+      var btnMenu = document.getElementById('btn-menu');
+      var btnLogo = document.getElementById('btn-logo');
+      var logoImg = document.getElementById('logo-img');
+      var dropdown = document.getElementById('cc-dropdown');
+
+      function toggleMenu(event) {
+        event.stopPropagation();
+        dropdown.classList.toggle('active');
+      }
+
+      if (btnText) btnText.addEventListener('click', toggleMenu);
+      if (btnMenu) btnMenu.addEventListener('click', toggleMenu);
+
+      var logoClickCount = 0;
+      if (btnLogo && logoImg) {
+        btnLogo.addEventListener('click', function (event) {
+          event.stopPropagation();
+          logoClickCount++;
+          if (logoClickCount % 2 === 1) {
+            logoImg.classList.remove('spin-full');
+            void logoImg.offsetWidth;
+            logoImg.classList.add('spin-half');
+          } else {
+            logoImg.classList.remove('spin-half');
+            void logoImg.offsetWidth;
+            logoImg.classList.add('spin-full');
+            window.setTimeout(function () {
+              logoImg.classList.remove('spin-full');
+            }, 520);
+          }
+        });
+      }
+
+      document.addEventListener('click', function (event) {
+        if (dropdown && dropdown.classList.contains('active')) {
+          dropdown.classList.remove('active');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

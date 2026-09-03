@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Co Center - Spotify Premium</title>
+
+<!-- IMPORT FONT TECHY (JETBRAINS MONO) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;0,800;1,400&display=swap" rel="stylesheet">
+
+<style>
+  /* PAKSA SEMUA ELEMEN PAKE FONT TECHY */
+  #cc-container, #cc-container * {
+    font-family: 'JetBrains Mono', monospace !important;
+    box-sizing: border-box;
+  }
+
+  html, body { 
+    margin: 0 !important; padding: 0 !important; height: 100% !important; 
+    overflow: hidden !important; background: #05060a !important; color: #fff; 
+  }
+
+  /* Overlay Penutup UI Blogger */
+  #cc-container {
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    z-index: 999999; background: #05060a; overflow-y: auto; -webkit-overflow-scrolling: touch;
+    padding-bottom: 50px;
+  }
+
+  /* Background GIF */
+  .cc-bg { position: fixed; inset: 0; z-index: -1; background: #000 url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgrJ7viyfUnWk4BlLj6TFd93Ze_T9XE8oaOmYhTuOD_16gftj2q1EabwmjJIiRBePxe2fMSJJyqrukZWwOUMXsoxGZ4lMqU-SjmrfQIcpmROt1YuoyTJNP1OFcouAhvcgsCHx_SsuoVrzq4tQFC8uCA8UgbBxI5HJ_VgOGPiEFUXVbHc75Swbe6kOPIzWpk/s1600/VID_20260812_133547_096%20%281%29.gif') no-repeat center center; background-size: cover; }
+  .cc-overlay { position: fixed; inset: 0; z-index: -1; background: rgba(3,4,8,0.78); }
+
+  /* EFEK FADE IN / FADE OUT ATAS DAN BAWAH */
+  .cc-fade-top {
+    position: fixed; top: 0; left: 0; right: 0; height: 35px;
+    background: linear-gradient(to bottom, #05060a 0%, transparent 100%);
+    z-index: 90; pointer-events: none;
+  }
+  .cc-fade-bottom {
+    position: fixed; bottom: 0; left: 0; right: 0; height: 45px;
+    background: linear-gradient(to top, #05060a 0%, transparent 100%);
+    z-index: 90; pointer-events: none;
+  }
+
+  /* Navigasi Presisi */
+  .cc-nav { display:flex; align-items:center; justify-content:space-between; padding:20px 30px 10px; position: relative; z-index: 10; }
+  .cc-brand { display:flex; align-items:center; gap:12px; font-weight:800; font-size:18px; color:#fff; letter-spacing:-0.5px; }
+  .cc-img { 
+    width:35px; height:35px; border-radius:10px; cursor:pointer; object-fit: cover; 
+    transition: transform 0.5s ease;
+    transform: rotate(var(--rot, 0deg));
+  }
+
+  /* Navbar Dropdown Menu */
+  .cc-menu { 
+    position: absolute; top: 65px; left: 30px; 
+    background: rgba(15, 15, 20, 0.95); backdrop-filter: blur(15px);
+    border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 10px;
+    z-index: 100; opacity: 0; visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+  }
+  .cc-menu.active { opacity: 1; visibility: visible; }
+  .cc-menu a { 
+    display: block; padding: 12px 15px; color: #fff; text-decoration: none; 
+    font-size: 13px; font-weight:700; border-radius: 10px; 
+    opacity: 0; transform: translateY(-8px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  /* Stagger keluar satu-satu, total durasi ~0.5s */
+  .cc-menu.active a { opacity: 1; transform: translateY(0); }
+  .cc-menu.active a:nth-child(1) { transition-delay: 0.05s; }
+  .cc-menu.active a:nth-child(2) { transition-delay: 0.2s; }
+  .cc-menu.active a:nth-child(3) { transition-delay: 0.35s; }
+  .cc-menu.active a:nth-child(4) { transition-delay: 0.5s; }
+  .cc-menu a:hover { background: rgba(255,255,255,0.1); }
+  
+  /* Animasi Buat Stroke RGB */
+  @keyframes rgbStroke {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+  }
+
+  /* Bubble Tutorial RGB */
+  .cc-container { padding: 10px 30px 30px; max-width: 800px; margin: 0 auto; position: relative; z-index: 5; }
+  
+  .cc-tutorial-bubble {
+    border-radius: 18px;
+    border: 2px solid transparent !important;
+    background: linear-gradient(#0d0f16, #0d0f16) padding-box,
+                linear-gradient(90deg, #ff2d6a, #ffd23f, #29e0c9, #7c5cff, #ff2d6a) border-box !important;
+    background-size: 200% 200% !important;
+    animation: rgbStroke 4s linear infinite;
+    overflow: hidden; 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  }
+
+  .cc-tutorial-img {
+    width: 100%;
+    display: block;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .cc-tutorial-body { padding: 25px 20px; }
+
+  .cc-section-title {
+    color: #29e0c9; font-weight: 800; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 12px 0;
+  }
+
+  /* BENEFIT LIST */
+  .cc-benefit-list {
+    padding-left: 18px; margin: 0 0 25px 0; color: #29e0c9;
+  }
+  .cc-benefit-list li {
+    font-size: 13px; line-height: 1.6; color: #e2e8f0; margin-bottom: 8px;
+  }
+
+  /* TUTORIAL LIST */
+  .cc-tutorial-list {
+    padding-left: 18px; margin: 0 0 25px 0; color: #ffd23f; font-weight: 700;
+  }
+  .cc-tutorial-list li {
+    font-size: 13px; line-height: 1.6; color: #e2e8f0; font-weight: 400; margin-bottom: 12px;
+  }
+
+  /* REFUND LIST */
+  .cc-refund-list {
+    padding-left: 0; margin: 0; list-style: none;
+  }
+  .cc-refund-list li {
+    font-size: 13px; line-height: 1.6; color: #e2e8f0; margin-bottom: 12px;
+  }
+  .cc-refund-label {
+    color: #ff2d6a; font-weight: 700; display: inline-block; margin-right: 4px;
+  }
+
+  /* CUSTOM TEXT STYLES */
+  .cc-intro-text {
+    font-size: 13px; line-height: 1.6; color: #e2e8f0; margin-bottom: 25px;
+  }
+  .cc-highlight-text {
+    color: #ffd23f; font-weight: bold;
+  }
+  .cc-footer-text {
+    font-size: 13px; line-height: 1.6; color: #29e0c9; margin-top: 25px; text-align: center; font-weight: bold;
+  }
+</style>
+</head>
+<body>
+
+<div id="cc-container">
+  <div class="cc-bg"></div>
+  <div class="cc-overlay"></div>
+
+  <!-- EFEK FADE TOP & BOTTOM -->
+  <div class="cc-fade-top"></div>
+  <div class="cc-fade-bottom"></div>
+
+  <!-- NAVBAR -->
+  <div class="cc-nav">
+    <div class="cc-brand">
+      <img class="cc-img" id="menu-trigger" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjgKAkQ6fTJOBPoOVz21klx2Vw6CXegaFe7QnvWoaDZTt1raufO5Ikvqu0JrP93QUf_iAcqVp8IkcTZjTx_e1mMqJENEYIpEjv-br9ApdDAeMiPcm8xoO-dFAmPJa-9y22yJdNme0Eb-EFxm-dS0Pd2UwUNu2cfB5pxS7KA7RP1JPKB-79xmqs5Vl9pSYHn/s1600/IMG_20260808_230713.png">
+      CO CENTER
+    </div>
+    <div id="menu" class="cc-menu">
+      <a href="https://cocenterpublic.blogspot.com">Home</a>
+      <a href="https://cocenterpublic.blogspot.com/2026/08/menu.html?m=1">Menu</a>
+      <a href="https://lynk.id/cocenter" target="_blank">Lynk.id</a>
+      <a href="#about">About Me</a>
+    </div>
+  </div>
+
+  <!-- BUBBLE KONTEN -->
+  <div class="cc-container">
+    <div class="cc-tutorial-bubble">
+      
+      <!-- GAMBAR -->
+      <img class="cc-tutorial-img" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgWcykPrFoFI88ld-x31p0EVAAO9TK4O36ShOcRx7UIrQvN9LGPbkcDBtd1lQpJa1zENG1mSldMbWiq-5IUC4V7V4iJQsZ_0Vi-d3KLCIM0gho1C52D4SfmNgV5Dk_Mj79Ns7lMQQ5fEU86vkW-4Srz_kMrsI9Wa1h6jqq9FOAtcbWA_iJZWL5YcViL_QPo/s736/9b1857defd4e25ce19cfb390b9c9fdba.jpg" alt="Spotify Premium">
+      
+      <div class="cc-tutorial-body">
+        
+        <!-- Intro Section -->
+        <h2 class="cc-section-title">🔥 SPOTIFY PREMIUM 🔥</h2>
+        <div class="cc-intro-text">
+          Spotify Premium memberikan pengalaman mendengarkan musik dan podcast terbaik secara maksimal tanpa gangguan sama sekali.<br><br>
+          Berikut adalah detail lengkap benefit yang akan didapatkan dengan Spotify Premium:
+        </div>
+
+        <!-- Benefit Section -->
+        <h2 class="cc-section-title">✨ TOTAL BENEFIT</h2>
+        <ul class="cc-benefit-list">
+          <li><strong>Bebas Iklan (No Ads):</strong> Mendengarkan lagu dan playlist favorit secara terus-menerus tanpa terputus oleh iklan audio maupun visual.</li>
+          <li><strong>Download & Mode Offline:</strong> Fitur untuk mengunduh lagu, album, atau podcast langsung ke penyimpanan perangkat, sehingga bisa diputar kapan saja tanpa kuota internet.</li>
+          <li><strong>Kualitas Suara Sangat Tinggi:</strong> Akses kualitas audio premium (hingga 320kbps) untuk suara yang jauh lebih jernih, tajam, dan ngebass.</li>
+          <li><strong>Bebas Pilih & Skip Lagu:</strong> Tidak ada batasan skip lagu. Pengguna bisa memilih, memutar, dan mengulang lagu apa saja secara acak (shuffle) maupun berurutan sesuka hati.</li>
+          <li><strong>Fitur Group Session:</strong> Bisa mendengarkan musik bersama teman atau keluarga secara real-time dari jarak jauh lewat kontrol playlist bersama.</li>
+          <li><strong>Kompatibilitas Multi-Perangkat:</strong> Dengarkan dengan lancar di HP, tablet, laptop, smart TV, hingga speaker pintar tanpa hambatan.</li>
+        </ul>
+
+        <!-- Rules Section -->
+        <h2 class="cc-section-title">📌 RULES & SYARAT (WAJIB DIBACA)</h2>
+        <ol class="cc-tutorial-list">
+          <li>Masa aktif paket berlaku 27 - 30 Hari sejak invitation diterima.</li>
+          <li>Setelah menerima Invitation Link, harap langsung dikonfirmasi lewat Browser.</li>
+          <li>Dilarang keras membagikan link Invitation ke orang lain.</li>
+          <li>Dilarang mengcancel pembayaran yang sudah diproses.</li>
+          <li>Estimasi proses perbaikan jika terjadi kendala/error: 0 - 3 Hari.</li>
+        </ol>
+
+        <!-- Garansi Section -->
+        <h2 class="cc-section-title">⚠️ KETENTUAN KLAIM GARANSI</h2>
+        <ul class="cc-refund-list">
+          <li><span class="cc-refund-label">Syarat Utama:</span> Wajib melampirkan Screenshot bukti Invitation berhasil.</li>
+          <li><span class="cc-refund-label">Prosedur:</span> Klaim garansi silakan langsung chat Admin atau hubungi nomor yang tertera pada link setelah pembayaran berhasil.</li>
+          <li><span class="cc-refund-label">Sanksi:</span> ❌ Tidak mematuhi rules = GARANSI HANGUS.</li>
+        </ul>
+
+        <div class="cc-footer-text">
+          Terima kasih telah membaca rules.<br>Be smart buyers, guys! Selamat menikmati fitur Premium! 🚀
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const trigger = document.getElementById('menu-trigger');
+  const menu = document.getElementById('menu');
+  let rotation = 0;
+
+  trigger.onclick = (e) => {
+    e.stopPropagation();
+    menu.classList.toggle('active');
+    rotation += 180;
+    trigger.style.setProperty('--rot', rotation + 'deg');
+  };
+
+  document.onclick = () => {
+    menu.classList.remove('active');
+  };
+
+  menu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', (e) => e.stopPropagation());
+  });
+</script>
+
+</body>
+</html>

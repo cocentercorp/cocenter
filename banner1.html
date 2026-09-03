@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Co Center - Promo Gemini AI Plus</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;0,800;1,400&display=swap" rel="stylesheet">
+
+<style>
+  #cc-container, #cc-container * {
+    font-family: 'JetBrains Mono', monospace !important;
+    box-sizing: border-box;
+  }
+
+  html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 100% !important;
+    overflow: hidden !important;
+    background: #05060a !important;
+    color: #fff;
+  }
+
+  #cc-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 999999;
+    background: #05060a;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 50px;
+  }
+
+  .cc-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: #000 url('https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh9DocQHrQw9p05Lbkght7m-rpO8O2HS6s3VG28Nc7FW6LPePf_AYJ3E104I15aD8OUsQRINz7QGbgv7EeJXKZKXdecQ-RAHvowdbS5vPqDrfZ63ZC3w-FOPKWPcVBKY5IFdenDmRixqc-Jy8BvVpAp6ReI7Io5UdxjNnlzY_TZLuTW6xaepq9RkRMA92kV/s1600/11.gif') no-repeat center center;
+    background-size: cover;
+  }
+
+  .cc-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: rgba(3,4,8,0.78);
+  }
+
+  .cc-fade-top {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 35px;
+    background: linear-gradient(to bottom, #05060a 0%, transparent 100%);
+    z-index: 90;
+    pointer-events: none;
+  }
+
+  .cc-fade-bottom {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 45px;
+    background: linear-gradient(to top, #05060a 0%, transparent 100%);
+    z-index: 90;
+    pointer-events: none;
+  }
+
+  .cc-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 30px 18px; /* Diperbesar sedikit padding bawahnya */
+    position: relative;
+    z-index: 10;
+  }
+
+  .cc-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 800;
+    font-size: 18px;
+    color: #fff;
+    letter-spacing: -0.5px;
+  }
+
+  .cc-img {
+    width: 35px;
+    height: 35px;
+    border-radius: 10px;
+    cursor: pointer;
+    object-fit: cover;
+    display: block;
+  }
+
+  .cc-menu {
+    position: absolute;
+    top: 72px; /* Disesuaikan dengan tinggi navbar baru */
+    left: 30px;
+    background: rgba(15, 15, 20, 0.95);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 10px;
+    z-index: 100;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+  }
+
+  .cc-menu.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .cc-menu a {
+    display: block;
+    padding: 12px 15px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+    border-radius: 10px;
+  }
+
+  .cc-menu a:hover {
+    background: rgba(255,255,255,0.1);
+  }
+
+  @keyframes rgbStroke {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 200% 50%; }
+  }
+
+  .cc-container {
+    padding: 0 30px 30px;
+    max-width: 800px;
+    margin: 8px auto 0; /* Margin atas diubah dari negatif menjadi positif agar tidak menumpuk */
+    position: relative;
+    z-index: 5;
+  }
+
+  .cc-tutorial-bubble {
+    border-radius: 18px;
+    border: 2px solid transparent !important;
+    background: linear-gradient(#0d0f16, #0d0f16) padding-box, linear-gradient(90deg, #ff2d6a, #ffd23f, #29e0c9, #7c5cff, #ff2d6a) border-box !important;
+    background-size: 200% 200% !important;
+    animation: rgbStroke 4s linear infinite;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+    padding-top: 0 !important;
+  }
+
+  .cc-tutorial-bubble a, 
+  .cc-tutorial-bubble .separator,
+  .cc-tutorial-bubble > div:first-child {
+    margin: 0 !important;
+    padding: 0 !important;
+    display: block !important;
+    line-height: 0 !important;
+  }
+  
+  .cc-tutorial-bubble > br {
+    display: none !important;
+  }
+
+  .cc-tutorial-img {
+    width: 100% !important;
+    margin: 0 !important; 
+    margin-top: -1px !important;
+    padding: 0 !important; 
+    display: block !important;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    vertical-align: top !important;
+    border: none !important;
+    border-top-left-radius: 16px !important;
+    border-top-right-radius: 16px !important;
+    border-bottom: 1px solid rgba(255,255,255,0.1) !important;
+  }
+
+  .cc-tutorial-body {
+    padding: 8px 20px 25px !important;
+    margin: 0 !important;
+  }
+
+  .cc-section-title {
+    color: #29e0c9;
+    font-weight: 800;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0 0 12px 0;
+  }
+
+  .cc-promo-badge {
+    display: inline-block;
+    background: rgba(255, 45, 106, 0.15);
+    border: 1px solid #ff2d6a;
+    color: #ff2d6a;
+    font-weight: 800;
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 8px;
+    margin: 0 0 15px 0 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .cc-benefit-list, .cc-tutorial-list, .cc-refund-list {
+    margin: 0 0 25px 0;
+  }
+
+  .cc-benefit-list { padding-left: 18px; color: #29e0c9; }
+  .cc-tutorial-list { padding-left: 18px; color: #ffd23f; font-weight: 700; }
+  .cc-refund-list { padding-left: 0; list-style: none; }
+
+  .cc-benefit-list li, .cc-tutorial-list li, .cc-refund-list li {
+    font-size: 13px;
+    line-height: 1.6;
+    color: #e2e8f0;
+    margin-bottom: 8px;
+  }
+
+  .cc-tutorial-list li { font-weight: 400; margin-bottom: 12px; }
+  .cc-refund-list li { margin-bottom: 12px; }
+
+  .cc-refund-label {
+    color: #ff2d6a;
+    font-weight: 700;
+    display: inline-block;
+    margin-right: 4px;
+  }
+</style>
+</head>
+<body>
+
+<div id="cc-container">
+  <div class="cc-bg"></div>
+  <div class="cc-overlay"></div>
+  <div class="cc-fade-top"></div>
+  <div class="cc-fade-bottom"></div>
+
+  <div class="cc-nav">
+    <div class="cc-brand">
+      <img class="cc-img" id="menu-trigger" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjgKAkQ6fTJOBPoOVz21klx2Vw6CXegaFe7QnvWoaDZTt1raufO5Ikvqu0JrP93QUf_iAcqVp8IkcTZjTx_e1mMqJENEYIpEjv-br9ApdDAeMiPcm8xoO-dFAmPJa-9y22yJdNme0Eb-EFxm-dS0Pd2UwUNu2cfB5pxS7KA7RP1JPKB-79xmqs5Vl9pSYHn/s1600/IMG_20260808_230713.png" alt="Co Center">
+      CO CENTER
+    </div>
+    <div id="menu" class="cc-menu">
+      <a href="https://cocenterpublic.blogspot.com">Home</a>
+      <a href="https://cocenterpublic.blogspot.com/2026/08/menu.html?m=1">Menu</a>
+      <a href="https://lynk.id/cocenter" target="_blank">Lynk.id</a>
+      <a href="#about">About Me</a>
+    </div>
+  </div>
+
+  <div class="cc-container">
+    <div class="cc-tutorial-bubble"><img class="cc-tutorial-img" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhdSexEj-KabAfzBQTtP5XLfUNpUQ-cSwYQswrE8O8S_Keq0sF1cXTdyTzlIuvlqgwQ3cNDPNhVt4f5R2h3UBGpzSadnhMSPMxZrWkVKxZrGIP20PzrUMZBr_uP72oGeKUNz0ml43PG0mjcgh8Qzh8uPaLIA-lKnztmptr_LkrnNG5mvFalL9SR8PfBNHiM/s1024/1786590373235.png" alt="Promo Gemini AI Plus"><div class="cc-tutorial-body">
+
+        <div class="cc-promo-badge">Time Limited Offer</div>
+        <h2 class="cc-section-title">Detail Promo Spesial</h2>
+        <ul class="cc-benefit-list">
+          <li>Beli paket internet pilihan tertentu di Co Center dan dapatkan BONUS GRATIS Gemini AI Plus selama 1 bulan penuh.</li>
+          <li>Penawaran terbatas (Time-Limited Offering) khusus untuk transaksi periode promo ini.</li>
+          <li>Proses aktivasi cepat, legal, dan langsung terhubung ke akun milikmu.</li>
+        </ul>
+
+        <h2 class="cc-section-title">Benefit Gemini AI Plus</h2>
+        <ul class="cc-benefit-list">
+          <li>Akses ke model AI tercanggih dengan performa tinggi & respon cepat</li>
+          <li>Kapasitas analisis dokumen, pemrosesan teks, serta coding super kompleks</li>
+          <li>Kapasitas konteks memori jauh lebih besar untuk tugas berat</li>
+          <li>Prioritas akses tanpa antre di jam-jam sibuk</li>
+          <li>Terintegrasi mulus dengan ekosistem Google Workspace</li>
+        </ul>
+
+        <h2 class="cc-section-title">Cara Claim & Aktivasi Promo</h2>
+        <ol class="cc-tutorial-list">
+          <li>Pilih dan beli Paket Internet Promo di Co Center via WhatsApp atau Lynk.id.</li>
+          <li>Selesaikan transaksi sesuai instruksi pembayaran yang tersedia.</li>
+          <li>Kirimkan bukti pembayaran/checkout ke Admin Co Center.</li>
+          <li>Admin akan memproses paket internet beserta akses bonus Gemini AI Plus kamu.</li>
+          <li>Ikuti panduan singkat dari Admin untuk mengaktifkan lisensi Gemini AI Plus di akunmu.</li>
+          <li>Selesai! Paket internet aktif dan Gemini AI Plus siap digunakan.</li>
+        </ol>
+
+        <h2 class="cc-section-title">Syarat & Ketentuan Promo</h2>
+        <ul class="cc-refund-list">
+          <li><span class="cc-refund-label">Ketersediaan:</span> Promo berlaku selama persediaan slot bonus Gemini AI Plus masih ada.</li>
+          <li><span class="cc-refund-label">Garansi Sistem:</span> Garansi penuh 1 minggu jika terjadi kendala pada lisensi bonus dari pihak kami.</li>
+          <li><span class="cc-refund-label">Claim Bonus:</span> Bonus wajib di-claim maksimal 1x24 jam setelah transaksi paket internet berhasil.</li>
+        </ul>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.getElementById('menu-trigger').onclick = (e) => {
+    e.stopPropagation();
+    document.getElementById('menu').classList.toggle('active');
+  };
+  document.onclick = () => {
+    document.getElementById('menu').classList.remove('active');
+  };
+</script>
+
+</body>
+</html>
