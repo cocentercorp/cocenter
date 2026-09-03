@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Co Center - Pilih Provider & Paket Kuota</title>
 
+<!-- IMPORT FONT TECHY (JETBRAINS MONO) -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,700;0,800;1,400&display=swap" rel="stylesheet">
@@ -117,7 +118,7 @@
     color: #0b1226;
   }
 
-  /* ===== AKORDION / CARD KATEGORI ===== */
+  /* ===== AKORDION / CARD KATEGORI DENGAN BACKGROUND GRADIENT FADE DI KIRI ===== */
   .cc-accordion-list {
     display: flex;
     flex-direction: column;
@@ -128,12 +129,25 @@
   .cc-acc-card {
     border-radius: 20px;
     overflow: hidden;
-    background: linear-gradient(135deg, #2c163a 0%, #150c22 100%);
+    background-color: #150c22;
+    background-size: cover;
+    background-position: left center;
+    background-repeat: no-repeat;
     border: 2px solid transparent;
     background-clip: padding-box;
     position: relative;
     box-shadow: 0 8px 24px rgba(0,0,0,0.4);
     transition: transform 0.2s ease;
+  }
+
+  /* Overlay gradient: padat di kiri (semi transparan gelap agar teks terbaca), makin ke kanan makin transparan */
+  .cc-acc-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(15, 10, 25, 0.92) 0%, rgba(15, 10, 25, 0.75) 45%, rgba(15, 10, 25, 0.3) 100%);
+    z-index: 1;
+    pointer-events: none;
   }
 
   .cc-acc-card::before {
@@ -148,6 +162,12 @@
     -webkit-mask-composite: xor;
     mask-composite: exclude;
     pointer-events: none;
+    z-index: 3;
+  }
+
+  .cc-acc-header, .cc-acc-body {
+    position: relative;
+    z-index: 2;
   }
 
   .cc-acc-header {
@@ -170,18 +190,20 @@
     font-size: 16px;
     color: #fff;
     letter-spacing: -0.3px;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.8);
   }
 
   .cc-acc-price-info {
     font-size: 12px;
     color: #ffd23f;
     font-weight: 700;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.8);
   }
 
   .cc-acc-arrow {
     width: 32px; height: 32px;
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(0,0,0,0.5);
+    border: 1px solid rgba(255,255,255,0.25);
     border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
     transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -196,7 +218,7 @@
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), padding 0.35s ease;
-    background: rgba(13, 15, 22, 0.7);
+    background: rgba(13, 15, 22, 0.85);
     border-top: 1px solid rgba(255,255,255,0.05);
     padding: 0 20px;
   }
@@ -301,6 +323,7 @@
   <div class="cc-bg"></div>
   <div class="cc-overlay"></div>
 
+  <!-- NAVBAR -->
   <div class="cc-nav">
     <div class="cc-brand-wrap">
       <div class="cc-brand-row cc-brand">
@@ -317,6 +340,7 @@
     </div>
   </div>
 
+  <!-- OPERATOR SELECTOR (PILLS) -->
   <div class="cc-op-wrapper" id="cc-op-wrapper">
     <div class="cc-op-pill cc-op-active" data-op="Indosat">Indosat</div>
     <div class="cc-op-pill" data-op="Axis">Axis</div>
@@ -326,13 +350,16 @@
     <div class="cc-op-pill" data-op="XL">XL</div>
   </div>
 
+  <!-- SECTION AKORDION KATEGORI BERDASARKAN OPERATOR TERPILIH -->
   <div class="cc-section">
     <div class="cc-section-title" id="cc-current-op-title">Pilih Kategori: Indosat</div>
     
     <div class="cc-accordion-list" id="cc-accordion-container">
-      </div>
+      <!-- Diisi dinamis via JS -->
+    </div>
   </div>
 
+  <!-- FOOTER SOCIAL -->
   <div class="cc-footer">
     <a class="cc-footer-icon" href="https://instagram.com/comersioid" target="_blank" rel="noopener">
       <svg viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.25.07 1.63.07 4.81 0 3.19-.01 3.56-.07 4.81-.15 3.22-1.66 4.77-4.92 4.92-1.25.06-1.62.07-4.85.07-3.2 0-3.58-.01-4.85-.07-3.26-.15-4.77-1.7-4.92-4.92-.06-1.25-.07-1.62-.07-4.81 0-3.18.02-3.56.07-4.81.15-3.23 1.66-4.77 4.92-4.92 1.27-.06 1.65-.07 4.85-.07zM12 0C8.74 0 8.33.01 7.05.07 2.7.27.27 2.7.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.2 4.35 2.63 6.78 6.98 6.98C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c4.35-.2 6.78-2.63 6.97-6.98.06-1.28.08-1.69.08-4.95s-.01-3.67-.07-4.95c-.2-4.35-2.63-6.78-6.97-6.98C15.67.01 15.26 0 12 0zm0 5.84A6.16 6.16 0 1 0 18.16 12 6.16 6.16 0 0 0 12 5.84zM12 16a4 4 0 1 1 4-4 4 4 0 0 1-4 4zm6.4-11.85a1.44 1.44 0 1 0 1.44 1.44 1.44 1.44 0 0 0-1.44-1.44z"/></svg>
@@ -347,14 +374,32 @@
 <script>
 document.addEventListener('DOMContentLoaded', function () {
 
-  // Map operator ke file HTML tujuannya masing-masing
-  var OPERATOR_LINKS = {
-    "Axis": "axis.html",
-    "Three": "three.html",
-    "XL": "xl.html",
-    "Telkomsel": "telkomsel.html",
-    "Indosat": "indosat.html",
-    "Smartfren": "smartfren.html"
+  // Map operator ke file HTML tujuannya masing-masing & link background icon masing-masing provider
+  var OPERATOR_CONFIG = {
+    "Axis": {
+      link: "axis.html",
+      bgImg: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgdHplLSgP-sBUP5K93-sDWeoCtlDiCEnPmpfQdCoaiGjqQhvGnwgzo2Gb6VHjnZiO8gIXTBZ6JmHgxnxQrbz7RC5X4PHcf_FNLhqQ_oC5nOqj6VtYhrK5AornAqbJk0lsKA7haR7nk9t6Cm3WUAyV9ZCqAMx3wqVD3T3BjmalT7XjBIxtNIt0vnZFJ-6z7/s640/7e2c38576ebeee1b5a5ca5874a11ea58.jpg"
+    },
+    "Three": {
+      link: "three.html",
+      bgImg: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgAI31ptwdvPNRtv5d0ryxhAHUr01sGbmvu8BhfEPzj7KavNrTpjCimRU888mEz9x86rwrmcraFlWlZgk7CWp0KyzS1VmzO_i3QsrRAtF6ZP11ca613tb4iFZHYHdDxs80xb5kcL2ePLidoTpLV0jTr7Wg8huEmqq56CwS8IPYA2t-r_dYjCnR3pQwm1yq6/s735/b79db84fc52062822cc255c53b09d336.jpg"
+    },
+    "XL": {
+      link: "xl.html",
+      bgImg: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiEkseO8v9xbUunA54g17nGY6ThyQgezxHOXW6CVPszORbPXnjjyC7AL8MtPxG-Hx2eoF-E2Zp_6k3RazssODlEgtVicJXv8NpIoCdGLBTy9g1QLF51ZcRy1CtNaZtgx-aNVGHzh1BF5gfzcBcJZYSHBgjfE4m38LLO7fC8lqBmWeqNq-HwDiv-8Bi1H8Rk/s340/4dd0bd046fb7de7daa409b6530459481.jpg"
+    },
+    "Telkomsel": {
+      link: "telkomsel.html",
+      bgImg: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgTDs_yg3loOrpQAn35HgjHhznXU275Y5M6V-8LgBmVDFGDvtwC26o9BWsoIfvPTgKLqUnTBSfpbTjwYFLbS1yqzs71Xc5RArzirCQ-_Cj3KQQvOzoz4EVd82qbSTAogrNsF3ERyiA8RkgkYz8LY9af65IyUC39Y29ZXEq8u2XBKeYdqw9PUcJe-cTx_91l/s600/e8b6516223465d6adfee34777c0e8de0.jpg"
+    },
+    "Indosat": {
+      link: "indosat.html",
+      bgImg: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhti7epnkCnwzSD4CbwL3q02IDp_5KptBstXYabK8Y0FRFk8MI-Vr16T22xcQhYEQ9IS0yXQVS5KYJey1LqBsII-YObzrZqO8Fp73g7fX7Rn3y6rm5-NDbygkyrTkCKNowTnBmXjdsC9nNYhUy5SRDh9JaXFvCvTk1LuNQbMYZ0wVawTVzITY7ZPB4eajjM/s736/f4bd2c5f08da049417313b10c6b89332.jpg"
+    },
+    "Smartfren": {
+      link: "smartfren.html",
+      bgImg: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiKb_GZI1gUMCOm8EzCo_hnwBDpOqrO4XAIJ00z8j2E8iGANAXcoljHdwOOvePxuvc4_hY2tcQmaddEIXheNw9ScQjfom2EQWsGSpcATtri0Cw_AcRkjMGljToaO8dcA1azYysciiXrEc0xpRpS0cq-Nod2GIIAlNJwIkQvldNWFISqaEgtW6A6T6PZLd-k/s735/8b51dbcadcbe904892c95af6515620dd.jpg"
+    }
   };
 
   // Master Data Paket Kuota Lengkap per Operator & Masuk ke 3 Bagan Kategori
@@ -435,7 +480,9 @@ document.addEventListener('DOMContentLoaded', function () {
       { id: "akhirbulan", title: "Kuota Akhir Bulan", priceRange: "Bulanan & kuota monster" }
     ];
 
-    var targetUrl = OPERATOR_LINKS[currentOperator] || "#";
+    var config = OPERATOR_CONFIG[currentOperator] || { link: "#", bgImg: "" };
+    var targetUrl = config.link;
+    var cardBgStyle = config.bgImg ? 'background-image: url(\'' + config.bgImg + '\');' : '';
 
     var html = '';
     categories.forEach(function(cat, index) {
@@ -444,7 +491,7 @@ document.addEventListener('DOMContentLoaded', function () {
       });
 
       var isOpen = index === 0 ? ' open' : '';
-      html += '<div class="cc-acc-card' + isOpen + '">' +
+      html += '<div class="cc-acc-card' + isOpen + '" style="' + cardBgStyle + '">' +
                 '<div class="cc-acc-header">' +
                   '<div class="cc-acc-info">' +
                     '<div class="cc-acc-title">' + cat.title + '</div>' +
