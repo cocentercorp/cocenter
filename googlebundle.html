@@ -48,18 +48,32 @@
   /* Navigasi Presisi */
   .cc-nav { display:flex; align-items:center; justify-content:space-between; padding:20px 30px 10px; position: relative; z-index: 10; }
   .cc-brand { display:flex; align-items:center; gap:12px; font-weight:800; font-size:18px; color:#fff; letter-spacing:-0.5px; }
-  .cc-img { width:35px; height:35px; border-radius:10px; cursor:pointer; object-fit: cover; transition: transform 0.5s ease; }
+  .cc-img { 
+    width:35px; height:35px; border-radius:10px; cursor:pointer; object-fit: cover; 
+    transition: transform 0.5s ease;
+    transform: rotate(var(--rot, 0deg));
+  }
 
   /* Navbar Dropdown Menu */
   .cc-menu { 
     position: absolute; top: 65px; left: 30px; 
     background: rgba(15, 15, 20, 0.95); backdrop-filter: blur(15px);
     border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 10px;
-    z-index: 100; opacity: 0; visibility: hidden; transform: translateY(-10px);
-    transition: all 0.3s ease;
+    z-index: 100; opacity: 0; visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
   }
-  .cc-menu.active { opacity: 1; visibility: visible; transform: translateY(0); }
-  .cc-menu a { display: block; padding: 12px 15px; color: #fff; text-decoration: none; font-size: 13px; font-weight:700; border-radius: 10px; }
+  .cc-menu.active { opacity: 1; visibility: visible; }
+  .cc-menu a { 
+    display: block; padding: 12px 15px; color: #fff; text-decoration: none; 
+    font-size: 13px; font-weight:700; border-radius: 10px; 
+    opacity: 0; transform: translateY(-8px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  .cc-menu.active a { opacity: 1; transform: translateY(0); }
+  .cc-menu.active a:nth-child(1) { transition-delay: 0.05s; }
+  .cc-menu.active a:nth-child(2) { transition-delay: 0.2s; }
+  .cc-menu.active a:nth-child(3) { transition-delay: 0.35s; }
+  .cc-menu.active a:nth-child(4) { transition-delay: 0.5s; }
   .cc-menu a:hover { background: rgba(255,255,255,0.1); }
   
   /* Animasi Buat Stroke RGB */
@@ -103,6 +117,15 @@
   .cc-benefit-list li {
     font-size: 13px; line-height: 1.6; color: #e2e8f0; margin-bottom: 8px;
   }
+
+  /* HARGA */
+  .cc-price-highlight {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px; padding: 16px; text-align: center; margin: 0 0 25px 0;
+  }
+  .cc-price-highlight .dur { font-size: 12px; font-weight: 800; color: #fff; text-transform: uppercase; letter-spacing: 0.5px; }
+  .cc-price-highlight .val { font-size: 22px; font-weight: 800; color: #29e0c9; margin: 6px 0 2px; }
+  .cc-price-highlight .per { font-size: 10px; color: #94a3b8; }
 
   /* TUTORIAL LIST */
   .cc-tutorial-list {
@@ -222,12 +245,14 @@
   .cc-total-value { font-size: 18px; font-weight: 800; color: #29e0c9; }
 
   /* Field email akun */
-  .cc-input-wrap { margin-bottom: 20px; }
+  .cc-input-wrap { margin-bottom: 20px; width: 100%; }
   .cc-input {
-    width: 100%; padding: 13px 14px; border-radius: 12px;
+    display: block; box-sizing: border-box !important;
+    width: 100% !important; max-width: 100%; margin: 0; padding: 14px;
+    border-radius: 14px;
     border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.04);
     color: #fff; font-family: 'JetBrains Mono', monospace; font-size: 13px;
-    outline: none;
+    outline: none; -webkit-appearance: none; appearance: none;
   }
   .cc-input::placeholder { color: #5b6472; }
   .cc-input:focus { border-color: #29e0c9; }
@@ -318,7 +343,7 @@
   <div class="cc-container">
     <div class="cc-tutorial-bubble">
       
-      <!-- GAMBAR BARU -->
+      <!-- GAMBAR PREVIEW -->
       <img class="cc-tutorial-img" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhMEOk2z-I_J_NqvPwa6rI6Xf4_cTkne5IkzCSBUbq1Uaahpc64ZgN7StSN6mOqSkOjw5xOsiTD6AR1lDIhQvSMLecvfuZAhjFK0Gj6ZYNT81tZCIt_uvZtK3SUcb5YhoreyicA7X7nWHz5_rx8hqmQCURPd32MDzukPDfCSvLkExV2FVfb5A0rw2DngfLB/s893/64bc46f9bd44b3d44f498746fb8ee058.jpg" alt="Paket Sultan All In One">
       
       <div class="cc-tutorial-body">
@@ -327,22 +352,29 @@
         <h2 class="cc-section-title">🔥 PAKET SULTAN ALL-IN-ONE 🔥</h2>
         <div class="cc-intro-text">
           <strong>YOUTUBE PREMIUM + GOOGLE AI PLUS (2TB)</strong><br><br>
-          Nikmati kombinasi hiburan tanpa batas dan fitur produktivitas AI kelas atas langsung di AKUN UTAMA kamu! Gak perlu ganti akun, gak perlu pusing ribet setup.<br><br>
-          <span class="cc-highlight-text">⚡ HARGA PAKET COMBO: Rp 30.000 / Slot (Durasi 27 - 30 Hari)</span>
+          Nikmati kombinasi hiburan tanpa batas dan fitur produktivitas AI kelas atas langsung di AKUN UTAMA kamu! Gak perlu ganti akun, gak perlu pusing ribet setup.
+        </div>
+
+        <!-- Harga -->
+        <h2 class="cc-section-title">💰 Harga Paket</h2>
+        <div class="cc-price-highlight">
+          <div class="dur">Paket Sultan AIO (1 Bulan)</div>
+          <div class="val">Rp30.000</div>
+          <div class="per">per bulan / slot</div>
         </div>
 
         <!-- Benefit Section -->
         <h2 class="cc-section-title">✨ TOTAL BENEFIT</h2>
         <ul class="cc-benefit-list">
-          <li><strong>YouTube Premium</strong> (Bebas iklan, Tanpa Jeda)</li>
-          <li><strong>Google Gemini Advanced Plus</strong> (Akses Model AI Tertinggi)</li>
-          <li><strong>YouTube Music Premium</strong> (Bebas Putar Musik Tanpa Iklan)</li>
-          <li><strong>YouTube Kids Premium</strong> (Aman Buat Si Kecil)</li>
-          <li><strong>Google Storage 2TB</strong> (Kapasitas Raksasa Drive & Photos)</li>
-          <li><strong>Google Flow & Flow Music</strong></li>
-          <li><strong>Pencarian Google</strong> (Mode AI)</li>
-          <li><strong>Gemini X Gmail & Workspace</strong> (Bantu Auto-Draft & Rangkum Email)</li>
-          <li><strong>Gemini Notebook / NotebookLM</strong> (Asisten Riset & Dokumen)</li>
+          <li><strong>YouTube Premium:</strong> Streaming video bebas iklan & tanpa jeda.</li>
+          <li><strong>Google Gemini Advanced Plus:</strong> Akses model AI tertinggi dari Google.</li>
+          <li><strong>YouTube Music Premium:</strong> Bebas putar musik tanpa iklan.</li>
+          <li><strong>YouTube Kids Premium:</strong> Hiburan anak yang aman dan bersih.</li>
+          <li><strong>Google Storage 2TB:</strong> Kapasitas raksasa untuk Drive & Photos.</li>
+          <li><strong>Google Flow & Flow Music:</strong> Produktivitas dan kreasi audio tanpa batas.</li>
+          <li><strong>Pencarian Google (Mode AI):</strong> Pengalaman searching lebih canggih.</li>
+          <li><strong>Gemini X Gmail & Workspace:</strong> Bantu auto-draft & rangkum email otomatis.</li>
+          <li><strong>Gemini Notebook / NotebookLM:</strong> Asisten riset & dokumen pribadi.</li>
         </ul>
 
         <!-- Rules Section -->
@@ -390,7 +422,7 @@
       <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhMEOk2z-I_J_NqvPwa6rI6Xf4_cTkne5IkzCSBUbq1Uaahpc64ZgN7StSN6mOqSkOjw5xOsiTD6AR1lDIhQvSMLecvfuZAhjFK0Gj6ZYNT81tZCIt_uvZtK3SUcb5YhoreyicA7X7nWHz5_rx8hqmQCURPd32MDzukPDfCSvLkExV2FVfb5A0rw2DngfLB/s893/64bc46f9bd44b3d44f498746fb8ee058.jpg" alt="Paket Sultan All In One">
       <div>
         <div class="cc-modal-item-name">Paket Sultan All-In-One</div>
-        <div class="cc-modal-item-sub">YouTube Premium + Google AI Plus 2TB · 27-30 Hari</div>
+        <div class="cc-modal-item-sub">YT Premium + Google AI Plus 2TB · 27-30 Hari</div>
         <div class="cc-modal-item-price">Rp30.000 / slot</div>
       </div>
     </div>
@@ -409,10 +441,10 @@
       <span class="cc-total-value" id="total-price">Rp30.000</span>
     </div>
 
-    <label class="cc-field-label">Email Akun Google Utama</label>
+    <label class="cc-field-label">Email / Kontak Akun</label>
     <div class="cc-input-wrap">
       <input type="email" class="cc-input" id="user-email" placeholder="contoh: namakamu@gmail.com">
-      <div class="cc-input-hint">Wajib akun Google utama kamu (bukan akun sampingan), untuk pengiriman Invitation.</div>
+      <div class="cc-input-hint">Kontak ini akan dikirim ke Admin untuk pengiriman invitation paket.</div>
     </div>
 
     <label class="cc-field-label">Metode Pembayaran</label>
@@ -444,18 +476,24 @@
 </div>
 
 <script>
-  // Rotasi icon: tiap klik nambah 180deg terus-terusan (klik 1 = 180, klik 2 = 360, klik 3 = 540, dst)
-  const menuIcon = document.getElementById('menu-trigger');
-  let rotationDeg = 0;
+  const trigger = document.getElementById('menu-trigger');
+  const menu = document.getElementById('menu');
+  let rotation = 0;
 
-  menuIcon.onclick = (e) => { 
-    e.stopPropagation(); 
-    document.getElementById('menu').classList.toggle('active'); 
-
-    rotationDeg += 180;
-    menuIcon.style.transform = `rotate(${rotationDeg}deg)`;
+  trigger.onclick = (e) => {
+    e.stopPropagation();
+    menu.classList.toggle('active');
+    rotation += 180;
+    trigger.style.setProperty('--rot', rotation + 'deg');
   };
-  document.onclick = () => document.getElementById('menu').classList.remove('active');
+
+  document.onclick = () => {
+    menu.classList.remove('active');
+  };
+
+  menu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', (e) => e.stopPropagation());
+  });
 
   // ============ MODAL LOGIC ============
   const modalBackdrop = document.getElementById('order-modal-backdrop');
@@ -533,7 +571,7 @@
 
     const itemName = 'Paket Sultan All-In-One (YouTube Premium + Google AI Plus 2TB)';
     const tanggal = getFormattedDate();
-    const waNumber = '6288971071456'; // 088971071456 -> format internasional 62
+    const waNumber = '6288971071456';
     const totalHarga = formatRupiah(qty * PRICE_PER_SLOT);
     const emailInput = document.getElementById('user-email').value.trim();
     const emailLine = emailInput ? emailInput : '(belum diisi)';
@@ -542,7 +580,7 @@
 `Nama Item : ${itemName}
 Jumlah Slot : ${qty}
 Total Harga : ${totalHarga}
-Email Akun Google Utama : ${emailLine}
+Email / Kontak : ${emailLine}
 Tanggal Pemesanan : ${tanggal}
 Metode Pembayaran : ${selectedMethod}
 Setuju Rules & Ketentuan : Ya, saya menyetujui Rules, Syarat, dan Ketentuan Klaim Garansi Paket Sultan Co Center`;

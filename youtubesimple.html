@@ -48,20 +48,32 @@
   /* Navigasi Presisi */
   .cc-nav { display:flex; align-items:center; justify-content:space-between; padding:20px 30px 10px; position: relative; z-index: 10; }
   .cc-brand { display:flex; align-items:center; gap:12px; font-weight:800; font-size:18px; color:#fff; letter-spacing:-0.5px; }
-  .cc-img { width:35px; height:35px; border-radius:10px; cursor:pointer; object-fit: cover; transition: transform 0.5s ease; transform: rotate(0deg); }
-  .cc-img.spin-half { transform: rotate(180deg); }
-  .cc-img.spin-full { transform: rotate(360deg); }
+  .cc-img { 
+    width:35px; height:35px; border-radius:10px; cursor:pointer; object-fit: cover; 
+    transition: transform 0.5s ease;
+    transform: rotate(var(--rot, 0deg));
+  }
 
   /* Navbar Dropdown Menu */
   .cc-menu { 
     position: absolute; top: 65px; left: 30px; 
     background: rgba(15, 15, 20, 0.95); backdrop-filter: blur(15px);
     border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 10px;
-    z-index: 100; opacity: 0; visibility: hidden; transform: translateY(-10px);
-    transition: all 0.3s ease;
+    z-index: 100; opacity: 0; visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
   }
-  .cc-menu.active { opacity: 1; visibility: visible; transform: translateY(0); }
-  .cc-menu a { display: block; padding: 12px 15px; color: #fff; text-decoration: none; font-size: 13px; font-weight:700; border-radius: 10px; }
+  .cc-menu.active { opacity: 1; visibility: visible; }
+  .cc-menu a { 
+    display: block; padding: 12px 15px; color: #fff; text-decoration: none; 
+    font-size: 13px; font-weight:700; border-radius: 10px; 
+    opacity: 0; transform: translateY(-8px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  .cc-menu.active a { opacity: 1; transform: translateY(0); }
+  .cc-menu.active a:nth-child(1) { transition-delay: 0.05s; }
+  .cc-menu.active a:nth-child(2) { transition-delay: 0.2s; }
+  .cc-menu.active a:nth-child(3) { transition-delay: 0.35s; }
+  .cc-menu.active a:nth-child(4) { transition-delay: 0.5s; }
   .cc-menu a:hover { background: rgba(255,255,255,0.1); }
   
   /* Animasi Buat Stroke RGB */
@@ -106,7 +118,7 @@
     font-size: 13px; line-height: 1.6; color: #e2e8f0; margin-bottom: 8px;
   }
 
-  /* HARGA VARIAN (KETENGAN) */
+  /* HARGA GRID (KETENGAN) */
   .cc-price-grid {
     display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 0 0 25px 0;
   }
@@ -137,8 +149,16 @@
     color: #ff2d6a; font-weight: 700; display: inline-block; margin-right: 4px;
   }
 
+  /* CUSTOM TEXT STYLES */
+  .cc-intro-text {
+    font-size: 13px; line-height: 1.6; color: #e2e8f0; margin-bottom: 25px;
+  }
+  .cc-footer-text {
+    font-size: 13px; line-height: 1.6; color: #29e0c9; margin-top: 0; text-align: center; font-weight: bold;
+  }
+
   /* ============ ORDER BUTTON ============ */
-  .cc-order-btn-wrap { padding: 0 20px 25px; }
+  .cc-order-btn-wrap { padding: 0 20px 25px; margin-top: 25px; }
   .cc-order-btn {
     width: 100%; padding: 16px; border-radius: 14px; border: none; cursor: pointer;
     font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: 14px;
@@ -200,11 +220,12 @@
   .cc-modal-item-sub { font-size: 11px; color: #94a3b8; }
   .cc-modal-item-price { font-size: 12px; font-weight: 800; color: #29e0c9; margin-top: 4px; }
 
-  /* Varian durasi (ganti "payment options" jadi pilihan durasi) */
   .cc-field-label {
     font-size: 12px; font-weight: 800; color: #29e0c9; text-transform: uppercase;
     letter-spacing: 0.5px; margin-bottom: 10px; display: block;
   }
+
+  /* Variant options */
   .cc-variant-options { display: flex; gap: 10px; margin-bottom: 20px; }
   .cc-variant-option {
     flex: 1; padding: 14px 10px; border-radius: 14px; cursor: pointer;
@@ -237,6 +258,20 @@
   .cc-total-label { font-size: 12px; font-weight: 800; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; }
   .cc-total-value { font-size: 18px; font-weight: 800; color: #29e0c9; }
 
+  /* Field email akun */
+  .cc-input-wrap { margin-bottom: 20px; width: 100%; }
+  .cc-input {
+    display: block; box-sizing: border-box !important;
+    width: 100% !important; max-width: 100%; margin: 0; padding: 14px;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.04);
+    color: #fff; font-family: 'JetBrains Mono', monospace; font-size: 13px;
+    outline: none; -webkit-appearance: none; appearance: none;
+  }
+  .cc-input::placeholder { color: #5b6472; }
+  .cc-input:focus { border-color: #29e0c9; }
+  .cc-input-hint { font-size: 10px; color: #94a3b8; margin-top: 6px; }
+
   /* Payment options */
   .cc-pay-options { display: flex; gap: 10px; margin-bottom: 20px; }
   .cc-pay-option {
@@ -250,18 +285,6 @@
   }
   .cc-pay-option-label { font-size: 12px; font-weight: 800; color: #fff; letter-spacing: 0.5px; }
   .cc-pay-option-sub { font-size: 10px; color: #94a3b8; margin-top: 3px; }
-
-  /* Field akun email (order langsung, ga lewat Lynk.id) */
-  .cc-input-wrap { margin-bottom: 20px; }
-  .cc-input {
-    width: 100%; padding: 13px 14px; border-radius: 12px;
-    border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.04);
-    color: #fff; font-family: 'JetBrains Mono', monospace; font-size: 13px;
-    outline: none;
-  }
-  .cc-input::placeholder { color: #5b6472; }
-  .cc-input:focus { border-color: #29e0c9; }
-  .cc-input-hint { font-size: 10px; color: #94a3b8; margin-top: 6px; }
 
   .cc-modal-footer-note {
     font-size: 11px; color: #94a3b8; line-height: 1.5; margin-bottom: 18px;
@@ -330,24 +353,24 @@
     </div>
   </div>
 
-  <!-- BUBBLE KONTEN TUTORIAL -->
+  <!-- BUBBLE KONTEN -->
   <div class="cc-container">
     <div class="cc-tutorial-bubble">
       
-      <img class="cc-tutorial-img" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiRfWcR4L1wSJTv5dz-33r8hRgAlLNFpeUMOy66SA0PB4zLty7xgWImXm3BZe7fTV_jnahHFU-h0lCm3S1i8kYOW-xhIOz1Ug_ydyETxJZRtHv-ueESw1MH8sYhSJKsL_8HQhtSrQiIaD8VmyPtpi_2ZfrgN2MAEOUBmhnjT2re1CqK-wsX7nI2ecX971FV/s1600/a1f5838deaa37d81fa9002c9e0ec99cf.jpg" alt="YouTube Premium">
+      <!-- GAMBAR PREVIEW -->
+      <img class="cc-tutorial-img" src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgROQcURT7YRk058BUIi6Ni6kTNL19tasrXsuMo0LJ_Hg7mZzne_4nMND_HvgopFbuPvxQylNZ2JegzMaY8s7cbC-rT5TJvoIAcD7qW52wFihYcLz5_DR8cPyCBkau6UCmWqi-rRelQhOU2BDjae-5hxQAv1P8_HLGSW2oBXAmeFlQfMXM5SWo_Y5NJBRpk/s736/dc6384229d0da2acb25ef930b078f4f0.jpg" alt="YouTube Premium Ketengan">
       
       <div class="cc-tutorial-body">
-        <!-- Benefit Section -->
-        <h2 class="cc-section-title">Benefit Premium</h2>
-        <ul class="cc-benefit-list">
-          <li>Streaming video bebas iklan</li>
-          <li>Fitur putar di latar belakang (background play)</li>
-          <li>Akses penuh YouTube Music Premium</li>
-          <li>Akses penuh YouTube Kids Premium</li>
-        </ul>
+        
+        <!-- Intro Section -->
+        <h2 class="cc-section-title">🔥 YOUTUBE PREMIUM KETENGAN 🔥</h2>
+        <div class="cc-intro-text">
+          Nikmati pengalaman menonton video tanpa jeda iklan, putar di latar belakang, serta akses penuh ke YouTube Music secara eksklusif dengan durasi fleksibel sesuai kebutuhanmu.<br><br>
+          Berikut adalah rincian harga paket ketengan:
+        </div>
 
-        <!-- Harga Ketengan -->
-        <h2 class="cc-section-title">Pilihan Durasi (Ketengan)</h2>
+        <!-- Harga Grid -->
+        <h2 class="cc-section-title">💰 Pilihan Harga Paket</h2>
         <div class="cc-price-grid">
           <div class="cc-price-card">
             <div class="dur">7 Hari</div>
@@ -361,28 +384,40 @@
           </div>
         </div>
 
+        <!-- Benefit Section -->
+        <h2 class="cc-section-title">✨ TOTAL BENEFIT</h2>
+        <ul class="cc-benefit-list">
+          <li><strong>Streaming Bebas Iklan:</strong> Tonton video favorit sepuasnya tanpa gangguan iklan komersial.</li>
+          <li><strong>Putar di Latar Belakang (Background Play):</strong> Tetap mendengarkan musik atau podcast meskipun layar HP dikunci atau membuka aplikasi lain.</li>
+          <li><strong>Akses YouTube Music Premium:</strong> Nikmati jutaan lagu dan album musik kualitas tinggi tanpa batas.</li>
+          <li><strong>YouTube Kids Premium:</strong> Hiburan anak yang lebih aman dan bersih dari iklan.</li>
+        </ul>
+
         <!-- Tutorial Section -->
-        <h2 class="cc-section-title">Cara Order & Aktivasi</h2>
+        <h2 class="cc-section-title">📌 CARA ORDER & AKTIVASI</h2>
         <ol class="cc-tutorial-list">
-          <li>Klik tombol "Order Sekarang" di bawah, lalu isi form (durasi, jumlah, email akun Google kamu).</li>
-          <li>Centang kotak persetujuan Syarat & Ketentuan.</li>
-          <li>Klik "Konfirmasi ke WhatsApp" — kamu akan diarahkan ke chat Admin dengan detail pesanan otomatis terisi.</li>
-          <li>Lakukan pembayaran sesuai metode yang dipilih, lalu kirim bukti bayar ke Admin.</li>
-          <li>Tunggu Admin mengirimkan Link YouTube Premium (via Family Link).</li>
-          <li>Buka dan klik link yang sudah dikirimkan.</li>
+          <li>Pesan YouTube Premium Ketengan via tombol order di bawah.</li>
+          <li>Lakukan konfirmasi pembayaran ke Admin.</li>
+          <li>Tunggu Admin mengirimkan Link Invitation YouTube Premium (via Family Link).</li>
+          <li>Buka dan klik link invitation yang dikirimkan.</li>
           <li>Pilih akun Google yang ingin diaktifkan status Premium-nya.</li>
           <li>Klik konfirmasi pada halaman browser.</li>
-          <li>Selesai! Akun YouTube kamu sudah resmi jadi Premium sesuai durasi yang dipesan.</li>
+          <li>Selesai! Akun YouTube kamu resmi jadi Premium.</li>
         </ol>
 
-        <!-- Garansi & Refund Section -->
-        <h2 class="cc-section-title">Garansi & Kebijakan Refund (Co Center)</h2>
+        <!-- Garansi Section -->
+        <h2 class="cc-section-title">⚠️ KETENTUAN KLAIM GARANSI & REFUND</h2>
         <ul class="cc-refund-list">
-          <li><span class="cc-refund-label">Proses Mudah:</span> Jika proses aktivasi gagal/mengalami kendala dari sistem kami, dana kamu akan di-refund 100% (Garansi 1 Minggu terhitung setelah transaksi).</li>
-          <li><span class="cc-refund-label">Metode Refund:</span> Refund akan ditransfer langsung ke akun e-Wallet (DANA/OVO/GoPay/ShopeePay) sesuai dengan data yang kamu berikan ke Admin.</li>
-          <li><span class="cc-refund-label">Syarat Claim:</span> Wajib melampirkan bukti screenshot kendala/kegagalan saat konfirmasi ke Admin.</li>
-          <li><span class="cc-refund-label">Ketentuan:</span> Pastikan data e-Wallet dan email akun yang kamu isi sudah benar. Kesalahan input oleh pembeli di luar tanggung jawab kami.</li>
+          <li><span class="cc-refund-label">Masa Garansi:</span> Berlaku selama seminggu (7 hari) terhitung setelah transaksi berhasil.</li>
+          <li><span class="cc-refund-label">Kebijakan Refund:</span> Jika aktivasi gagal dan kendala berasal dari sistem kami, dana kamu akan di-refund 100%.</li>
+          <li><span class="cc-refund-label">Syarat Utama:</span> Wajib melampirkan Screenshot bukti kendala atau error saat konfirmasi ke Admin.</li>
+          <li><span class="cc-refund-label">Sanksi:</span> ❌ Tidak mematuhi rules = GARANSI HANGUS.</li>
         </ul>
+
+        <div class="cc-footer-text">
+          Terima kasih telah membaca rules.<br>Be smart buyers, guys! Selamat menikmati tontonannya! 🚀
+        </div>
+
       </div>
 
       <!-- ORDER BUTTON -->
@@ -403,7 +438,7 @@
     </div>
 
     <div class="cc-modal-item">
-      <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiRfWcR4L1wSJTv5dz-33r8hRgAlLNFpeUMOy66SA0PB4zLty7xgWImXm3BZe7fTV_jnahHFU-h0lCm3S1i8kYOW-xhIOz1Ug_ydyETxJZRtHv-ueESw1MH8sYhSJKsL_8HQhtSrQiIaD8VmyPtpi_2ZfrgN2MAEOUBmhnjT2re1CqK-wsX7nI2ecX971FV/s1600/a1f5838deaa37d81fa9002c9e0ec99cf.jpg" alt="YT Premium">
+      <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiRfWcR4L1wSJTv5dz-33r8hRgAlLNFpeUMOy66SA0PB4zLty7xgWImXm3BZe7fTV_jnahHFU-h0lCm3S1i8kYOW-xhIOz1Ug_ydyETxJZRtHv-ueESw1MH8sYhSJKsL_8HQhtSrQiIaD8VmyPtpi_2ZfrgN2MAEOUBmhnjT2re1CqK-wsX7nI2ecX971FV/s1600/a1f5838deaa37d81fa9002c9e0ec99cf.jpg" alt="YouTube Premium Ketengan">
       <div>
         <div class="cc-modal-item-name">YouTube Premium Ketengan</div>
         <div class="cc-modal-item-sub" id="modal-item-sub">7 Hari</div>
@@ -437,10 +472,10 @@
       <span class="cc-total-value" id="total-price">Rp2.000</span>
     </div>
 
-    <label class="cc-field-label">Email Akun Google</label>
+    <label class="cc-field-label">Email / Kontak Akun</label>
     <div class="cc-input-wrap">
       <input type="email" class="cc-input" id="user-email" placeholder="contoh: namakamu@gmail.com">
-      <div class="cc-input-hint">Email ini akan dikirim ke Admin untuk proses aktivasi Family Link.</div>
+      <div class="cc-input-hint">Kontak ini akan dikirim ke Admin untuk proses invitation/pengiriman akun.</div>
     </div>
 
     <label class="cc-field-label">Metode Pembayaran</label>
@@ -461,7 +496,7 @@
 
     <label class="cc-tnc-row" for="tnc-checkbox">
       <input type="checkbox" class="cc-tnc-checkbox" id="tnc-checkbox">
-      <span class="cc-tnc-text">Saya sudah membaca dan <b>setuju</b> dengan Syarat & Ketentuan, Garansi, serta Kebijakan Refund Co Center yang berlaku.</span>
+      <span class="cc-tnc-text">Saya sudah membaca dan <b>setuju</b> dengan Syarat & Ketentuan, Garansi, serta Kebijakan Refund YouTube Co Center.</span>
     </label>
 
     <button class="cc-confirm-btn" id="confirm-order" disabled>
@@ -472,31 +507,24 @@
 </div>
 
 <script>
-  // Rotasi icon: klik ganjil = 180deg, klik genap = 360deg (lalu reset ke 0 tanpa animasi biar bisa muter lagi)
-  const menuIcon = document.getElementById('menu-trigger');
-  let clickCount = 0;
+  const trigger = document.getElementById('menu-trigger');
+  const menu = document.getElementById('menu');
+  let rotation = 0;
 
-  menuIcon.onclick = (e) => { 
-    e.stopPropagation(); 
-    document.getElementById('menu').classList.toggle('active'); 
-
-    clickCount++;
-    if (clickCount % 2 === 1) {
-      menuIcon.classList.remove('spin-full');
-      menuIcon.classList.add('spin-half');
-    } else {
-      menuIcon.classList.remove('spin-half');
-      menuIcon.classList.add('spin-full');
-      // reset ke 0deg tanpa transisi setelah animasi full selesai, biar siklus bisa ulang dari 0
-      setTimeout(() => {
-        menuIcon.style.transition = 'none';
-        menuIcon.classList.remove('spin-full');
-        void menuIcon.offsetWidth; // force reflow
-        menuIcon.style.transition = 'transform 0.5s ease';
-      }, 500);
-    }
+  trigger.onclick = (e) => {
+    e.stopPropagation();
+    menu.classList.toggle('active');
+    rotation += 180;
+    trigger.style.setProperty('--rot', rotation + 'deg');
   };
-  document.onclick = () => document.getElementById('menu').classList.remove('active');
+
+  document.onclick = () => {
+    menu.classList.remove('active');
+  };
+
+  menu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', (e) => e.stopPropagation());
+  });
 
   // ============ MODAL LOGIC ============
   const modalBackdrop = document.getElementById('order-modal-backdrop');
@@ -593,7 +621,7 @@
 
     const itemName = `YouTube Premium Ketengan (${selectedDays} Hari)`;
     const tanggal = getFormattedDate();
-    const waNumber = '6288971071456'; // 088971071456 -> format internasional 62
+    const waNumber = '6288971071456';
     const totalHarga = formatRupiah(qty * selectedPricePerItem);
     const emailInput = document.getElementById('user-email').value.trim();
     const emailLine = emailInput ? emailInput : '(belum diisi)';
@@ -602,7 +630,7 @@
 `Nama Item : ${itemName}
 Jumlah Item : ${qty}
 Total Harga : ${totalHarga}
-Email Akun Google : ${emailLine}
+Email / Kontak : ${emailLine}
 Tanggal Pemesanan : ${tanggal}
 Metode Pembayaran : ${selectedMethod}
 Setuju S&K : Ya, saya menyetujui Syarat & Ketentuan, Garansi, dan Kebijakan Refund Co Center`;
